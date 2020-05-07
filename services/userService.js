@@ -10,6 +10,7 @@ module.exports = {
     getById,
     create,
     update,
+    addPlaylist,
     delete: _delete
 }
 
@@ -69,6 +70,13 @@ async function update(id, userParam) {
     // copy userParam properties to user
     Object.assign(user, userParam);
 
+    await user.save();
+}
+
+async function addPlaylist(userId, playlistId, type) {
+    const user = await User.findById(userId);
+    if (!user) throw 'User not found when adding playlist';
+    user[type].push(playlistId);
     await user.save();
 }
 

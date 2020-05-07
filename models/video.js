@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const FKHelper = require('../_helpers/foreign-key-helper');
 
 const videoSchema = new Schema({
     title: { type: String, required: true },
+    url: { type: String, required: true },
     youtubeTitle: { type: String, required: true },
     description: { type: String },
     youtubeDescription: { type: String },

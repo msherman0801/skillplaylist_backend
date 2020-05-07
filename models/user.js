@@ -18,6 +18,17 @@ const userSchema = new Schema({
             message: `Playlist doesn't exist`
         }
     }],
+    userPlaylists: [{
+        type: Schema.ObjectId,
+        ref: 'Playlist',
+        validate: {
+            isAsync: true,
+            validator: function(v) {
+                return FKHelper(mongoose.model('Playlist'), v);
+            },
+            message: `Playlist doesn't exist`
+        }
+    }],
     checkpoints: [{
         playlistId: { type: Schema.ObjectId },
         videoIds: [{ type: Schema.ObjectId }]
@@ -27,6 +38,7 @@ const userSchema = new Schema({
         noteId: { type: Schema.ObjectId }
     }],
     friends: [{ type: Schema.ObjectId }],
+    progress: { type: String },
     createdDate: { type: Date, default: Date.now }
 })
 

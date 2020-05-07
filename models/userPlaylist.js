@@ -2,11 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const FKHelper = require('../_helpers/foreign-key-helper');
 
-const noteSchema = new Schema({
-    text: { type: String, required: true },
-    createdDate: { type: Date, default: Date.now },
+const userPlaylistSchema = new Schema({
+    key: { type: String, required: true },
+    name: { type: String, required: true },
+    desription: { type: String, default: "A skill userPlaylist." },
+    tags: [{ type: String }],
     videoIds: {
-        type: Schema.ObjectId,
+        type: [Schema.ObjectId],
         ref: 'Video',
         validate: {
                 isAsync: true,
@@ -17,10 +19,14 @@ const noteSchema = new Schema({
             },
         required: true
     },
-    username: { type: String, required: true }
+    viewCount: { type: Number },
+    category: { type: String },
+    topic: { type: String },
+    subtopic: { type: String },
+    owner: { type: String, required: true }
 })
 
-noteSchema.set('toJSON', {
+userPlaylistSchema.set('toJSON', {
     virtuals: true,
     versionKey: false,
     transform: function (doc, ret) {
@@ -28,4 +34,4 @@ noteSchema.set('toJSON', {
     }
 });
 
-module.exports = mongoose.model('Note', noteSchema);
+module.exports = mongoose.model('UserPlaylist', userPlaylistSchema);

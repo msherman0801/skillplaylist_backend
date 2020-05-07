@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const playlistService = require('../services/playlistService');
+const userPlaylistService = require('../services/userPlaylistService');
 const userService = require('../services/userService');
 const logger = require('../logs/logger');
 
@@ -19,9 +19,9 @@ module.exports = router;
 function create(req, res, next) {
     const userId = req.body.id;
     const playlist = req.body.playlist;
-    playlistService.create(playlist)
+    userPlaylistService.create(playlist)
         .then(playlist => {
-            userService.addPlaylist(userId, playlist.id, "playlists")
+            userService.addPlaylist(userId, playlist.id, "userPlaylists")
             res.json(playlist)
         })
         .catch(err => { 
@@ -31,7 +31,7 @@ function create(req, res, next) {
 }
 
 function getAll(req, res, next) {
-    playlistService.getAll()
+    userPlaylistService.getAll()
         .then(playlists => res.json(playlists))
         .catch(err => { 
             next(err)
@@ -40,7 +40,7 @@ function getAll(req, res, next) {
 }
 
 function getById(req, res, next) {
-    playlistService.getById(req.params.id)
+    userPlaylistService.getById(req.params.id)
         .then(playlist => res.json(playlist))
         .catch(err => { 
             next(err)
@@ -49,7 +49,7 @@ function getById(req, res, next) {
 }
 
 function getVideosByPlaylistId(req, res, next) {
-    playlistService.getVideosByPlaylistId(req.params.id)
+    userPlaylistService.getVideosByPlaylistId(req.params.id)
         .then(videos => res.json(videos))
         .catch(err => { 
             next(err)
@@ -58,7 +58,7 @@ function getVideosByPlaylistId(req, res, next) {
 }
 
 function getPlaylistsByCategory(req, res, next) {
-    playlistService.getPlaylistsByCategory(req.body.category)
+    userPlaylistService.getPlaylistsByCategory(req.body.category)
         .then(playlists => res.json(playlists))
         .catch(err => { 
             next(err)
@@ -67,7 +67,7 @@ function getPlaylistsByCategory(req, res, next) {
 }
 
 function getPlaylistsByTags(req, res, next) {
-    playlistService.getPlaylistsByCategory(req.body)
+    userPlaylistService.getPlaylistsByCategory(req.body)
         .then(playlists => res.json(playlists))
         .catch(err => { 
             next(err)
@@ -76,7 +76,7 @@ function getPlaylistsByTags(req, res, next) {
 }
 
 function update(req, res, next) {
-    playlistService.update(req.params.id, req.body)
+    userPlaylistService.update(req.params.id, req.body)
         .then(playlist => res.json(playlist))
         .catch(err => { 
             next(err)
@@ -85,7 +85,7 @@ function update(req, res, next) {
 }
 
 function _delete(req, res, next) {
-    playlistService.delete(req.params.id)
+    userPlaylistService.delete(req.params.id)
         .then(() => res.json({}))
         .catch(err => { 
             next(err)

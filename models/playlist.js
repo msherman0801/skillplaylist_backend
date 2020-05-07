@@ -22,13 +22,9 @@ const playlistSchema = new Schema({
     viewCount: { type: Number },
     category: { type: String },
     topic: { type: String },
-    subTopic: { type: String },
+    subtopic: { type: String },
     owner: { type: String, required: true }
 })
-
-function minLimit(val) {
-    return val.length >= 1;
-}
 
 playlistSchema.set('toJSON', {
     virtuals: true,
